@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Bootstrap CSS import from CDN -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+      integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+      crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en&key=AIzaSyB39kWgC-d_ywpONMeqJssq9j_ld2FgW4M"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+		<script src="./static/js/index.js"></script>
+
+    <!-- CSS Imports -->
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css'
+      integrity='sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B'
+      crossorigin='anonymous'>
+    <link rel='stylesheet' href='./static/css/modal.css'>
+    <link rel='stylesheet' href='./static/css/roshni.css'>
+    <link rel='stylesheet' href='./static/css/style.css'>
+    <title>InstaBuy Main Page</title>
+  </head>
+  <body>
+    <div id='app-mainpage' class='container-fluid full-height'>
+      {{ subscribe_alert }}
+      <div id="half-pager" class="row justify-content-end">
+        <nav id="top-nav" class='navbar navbar-light d-flex navbar-depth col-xs-12' >
+
+          <a class="brand" href="/#">InstaBuy</a>
+          <a class="btn" href="#">About</a>
+          <a class="btn" href="#">Careers</a>
+          <a class="brand" href="#" id="myBtn" >Austin</a>
+          {{ upload_photo_button }}
+          <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
+
+          <!-- The Modal -->
+          <div id="myModal" class="modal" value="" style="z-index: 9999">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <p id="demo"></p>
+              <input type="text" id="autocomplete"/>
+               <button id="button1" class="getlocationButton " onclick="getLocation()">Get Location</button>
+            </div>
+          </div>
+
+          <a id='loginAnchor' class='btn btn-primary' href='{{
+            user_action_url|safe }}'>{{ user_action_url_linktext }}</a>
+        </nav>
+      </div>
+      <div class="row">
+        <div class="col-md-3 sidebar-col">
+          <nav id="sidebar">
+            <ul class="list-unstyled components">
+              {{ subscribe_form }} {{ viewtheme_form }}
+              <p>Filter by food</p>
+              <li>
+                <form>
+                  <ul>
+                    <input id="filter-search-input" type="text" placeholder="Search filters" >
+                     {{ add_theme_btn }}
+                    {% for result in results %}
+                     <li><button class="filter-item" type="submit" value="{{ result.subscriptions }}" name="filter" style="width:220px;">{{ result.subscriptions }}</button></li>
+                    {% endfor %}
+                    <li><button id="all" class="filter-item" type="submit" href="/#" style="width:220px;">All</button></li>
+
+                  </ul>
+                </form>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-md-9">
+          {% for image in images %}
+          <div class="column">
+            <a href="/reportdisplay/{{ image[0] }}"> <img id="myImage"  src="{{ image[1] }}" style="width:100%;max-width:300px" class="zoom"></a>
+          </div>
+          {% endfor %}
+        </div>
+    </div>
+    </div>
+
+  </body>
+</html>

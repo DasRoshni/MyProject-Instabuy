@@ -1,0 +1,4 @@
+cron:
+- description: "SendSubscriptionEmails"
+  url: /subscriptionemails
+  schedule: every 12 hours

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Upload Image</title>
+    <meta charset = "UTF-8" />
+     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+   <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en&key=AIzaSyB39kWgC-d_ywpONMeqJssq9j_ld2FgW4M"></script>
+    <script src="./static/js/dropzone.js"></script>
+    <link rel='stylesheet' href='./static/css/dropzone.css'>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <link rel='stylesheet' href='./static/css/modal.css'>
+    <link rel='stylesheet' href='./static/css/roshni.css'>
+    <link rel='stylesheet' href='./static/css/style.css'>
+     </head>
+    <body>
+    <div id="half-pager" class="row justify-content-end" style="height:80px">
+          <nav id="top-nav" class='navbar navbar-light d-flex navbar-depth col-xs-12' >
+            <a class="brand" href="/#">InstaBuy</a>
+          </nav>
+      </div>
+    <fieldset>
+       <legend>Your Post is.....</legend>
+
+        <form action="{{ upload_url }}"  class="dropzone" id="myDropzone" enctype="multipart/form-data">
+
+
+          <p>
+            <label>Restaurant :</label>
+            <input type = "text"
+                   id = "restaurant" name="restaurant"/>
+          </p>
+          <p>
+            <label>Dish Name :</label>
+            <input  id = "dish" name="dish"/>
+          </p>
+          <p>
+            <label>Price : $</label>
+            <input  id = "price" name="price"/>
+          </p>
+          <p>
+            <label>Description :</label>
+          </p>
+          <p>
+            <textarea id = "Description :" name="description"
+                    rows = "3"
+                    cols = "80"></textarea>
+          </p>
+          {% for result in results %}
+          <input type="checkbox" id="Subscribe" class="filter-item"  name="filter" value="{{ result.subscriptions }}" /><label>{{ result.subscriptions }}</label>
+          {% endfor %}
+          <!--GeoLocation-->
+
+
+          <article>
+            <label>Latitude :</label><input id="latitude" name="latitude" value=""/>
+            <label>Longitude :</label><input id="longitude" name="longitude" value=""/>
+            <p>Finding your location: <span id="status">checking...</span></p>
+          </article>
+        <script>
+        function success(position) {
+          var s = document.querySelector('#status');
+
+          if (s.className == 'success') {
+            return;
+          }
+
+          s.innerHTML = "found you!";
+          s.className = 'success';
+
+          var mapcanvas = document.createElement('div');
+          mapcanvas.id = 'mapcanvas';
+          mapcanvas.style.height = '400px';
+          mapcanvas.style.width = '560px';
+
+          document.querySelector('article').appendChild(mapcanvas);
+
+          var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          document.getElementById("latitude").value=position.coords.latitude
+          document.getElementById("longitude").value=position.coords.longitude
+          var myOptions = {
+            zoom: 15,
+            center: latlng,
+            mapTypeControl: false,
+            navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+          var map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
+
+          var marker = new google.maps.Marker({
+              position: latlng,
+              map: map,
+              title:"You are here! (at least within a "+position.coords.accuracy+" meter radius)"
+          });
+          
+        }
+
+        function error(msg) {
+          var s = document.querySelector('#status');
+          s.innerHTML = typeof msg == 'string' ? msg : "failed";
+          s.className = 'fail';
+
+        }
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+          error('not supported');
+        }
+
+      </script>
+
+
+
+          <div class="dropzone-previews"></div>
+
+            <input type="submit" id="submit-all" name="View" value="Submit Post">
+
+          </form>
+</fieldset>
+
+    </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Upload Image</title>
+    <meta charset = "UTF-8" />
+     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <script src="./static/js/dropzone.js"></script>
+    <link rel='stylesheet' href='./static/css/dropzone.css'>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <link rel='stylesheet' href='./static/css/modal.css'>
+    <link rel='stylesheet' href='./static/css/roshni.css'>
+    <link rel='stylesheet' href='./static/css/style.css'>
+    <script src="./static/js/index.js"></script>
+    <title>InstaBuy Post Upload</title>
+     </head>
+    <body>
+      <div id="half-pager" class="row justify-content-end" style="height:80px">
+          <nav id="top-nav" class='navbar navbar-light d-flex navbar-depth col-xs-12' >
+            <a class="brand" href="/#">InstaBuy</a>
+            <a id='loginAnchor' class='btn btn-primary' href='{{
+              user_action_url|safe }}'>{{ user_action_url_linktext }}</a>
+          </nav>
+      </div>
+
+
+    <fieldset>
+       <legend>New Theme...</legend>
+
+        <form action="{{ upload_theme }}"  method="post" enctype="multipart/form-data">
+
+
+          <p>
+            <label>Theme Name :</label>
+            <input type = "text"
+                   id = "theme_name" name="theme_name"/>
+          </p>
+
+            <input type="submit" id="submit-all" name="View" value="Submit Post">
+
+          </form>
+</fieldset>
+
+    </body>
+</html>

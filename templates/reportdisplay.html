@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Report</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&language=en&key=AIzaSyB39kWgC-d_ywpONMeqJssq9j_ld2FgW4M"></script>
+      <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+          height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+      </style>
+      <link rel='stylesheet' href='./static/css/modal.css'>
+      <link rel='stylesheet' href='./static/css/roshni.css'>
+      <link rel='stylesheet' href='./static/css/style.css'>
+  </head>
+  <body>
+      <div id="half-pager" class="row justify-content-end" style="height:80px;background-image: url(http://scoop.asia/wp-content/uploads/2018/07/food-1200x600.jpg);
+  background-size: cover;
+	background-color: rgba(200,100,0,.5);
+	background-blend-mode: multiply;">
+          <nav id="top-nav" class='navbar navbar-light d-flex navbar-depth col-xs-12' >
+            <a class="brand" href="/#" style="color: white">InstaBuy</a>
+          </nav>
+      </div>
+    <fieldset>
+       <legend>Report...</legend>
+
+        <form action="{{ get_report }}" enctype="multipart/form-data">
+          {% for get_each_report in get_report %}
+          <p>
+             <img id="myImage"  src="{{ img_url }}" style="width:100%;max-width:300px">
+          </p>
+           <p>
+            <label>Restaurant :</label>
+            <a type = "text" id = "restaurant" name="restaurant">{{get_each_report.restaurant}}</a>
+          </p>
+          <p>
+            <label>Dish Name :</label>
+            <a type = "text" id = "dish" name="dish">{{get_each_report.dish}}</a>
+          </p>
+           <p>
+            <label>Price : $</label>
+            <a type = "text"  id = "price" name="price">{{get_each_report.price}}</a>
+          </p>
+          <p>
+            <label>Description :</label>
+            <a type = "text" id = "Description :" name="description" rows = "3" cols = "80">{{get_each_report.description}}</a>
+          </p>
+
+          <article>
+            <p id="latitude" name="latitude" value="{{ get_each_report.latitude }}"><label>Latitude : </label>{{ get_each_report.latitude }}</p>
+            <p id="longitude" name="longitude" value="{{ get_each_report.longitude }}"><label>Longitude :</label>{{ get_each_report.longitude }}</p>
+            <p>Finding your location: <span id="status">checking...</span></p>
+          </article>
+        <script>
+        function initializeCurrent(latcurr, longcurr) {
+             currgeocoder = new google.maps.Geocoder();
+             console.log(latcurr + "-- ######## --" + longcurr);
+             if (latcurr != '' && longcurr != '') {
+                 var myLatlng = new google.maps.LatLng(latcurr, longcurr);
+                 return getCurrentAddress(myLatlng);
+              }
+          }
+
+        </script>
+
+          {% endfor %}
+
+        </form>
+    </fieldset>
+  </body>
+</html>
